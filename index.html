@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulau Tuba Homestay</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Typography */
+    --font-heading: 'Crimson Pro', Georgia, serif;
+    --font-body: 'Outfit', system-ui, sans-serif;
+
+    /* Sea Morning palette */
+    --bg:      #f5f9f8;
+    --surface: #e6f2ee;
+    --accent:  #2e7060;
+    --ink:     #1a2520;
+    --muted:   #527068;
+    --border:  rgba(26,37,32,0.1);
+
+    /* Buttons */
+    --btn-r:   5px;
+    --btn-pv:  0.72rem;
+    --btn-ph:  1.5rem;
+    --btn-fs:  0.9rem;
+    --btn-fw:  500;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink);
+    background: var(--bg);
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ─────────────────────────────
+     NAV
+  ───────────────────────────── */
+  nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+  }
+  .nav-name {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.82);
+    letter-spacing: 0.01em;
+  }
+  .nav-wa {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: var(--btn-fw);
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.28);
+    padding: 0.38rem 1rem;
+    border-radius: var(--btn-r);
+    transition: border-color 0.15s;
+  }
+  .nav-wa:hover { border-color: rgba(255,255,255,0.5); }
+
+  /* ─────────────────────────────
+     HERO
+  ───────────────────────────── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 580px;
+    overflow: hidden;
+  }
+  .hero-img {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 65% center;
+  }
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right,
+        rgba(18,28,14,0.87) 0%,
+        rgba(18,28,14,0.60) 28%,
+        rgba(18,28,14,0.12) 55%,
+        transparent 68%
+      ),
+      linear-gradient(to top,
+        rgba(18,28,14,0.52) 0%,
+        transparent 42%
+      );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 3rem;
+    left: clamp(1.5rem, 4vw, 3.5rem);
+    max-width: 520px;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .hero-content h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 0.8rem;
+  }
+  .hero-content p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.58);
+    margin-bottom: 1.6rem;
+    max-width: 40ch;
+    line-height: 1.65;
+  }
+  .btn-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25d366;
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: var(--btn-fs);
+    font-weight: var(--btn-fw);
+    padding: var(--btn-pv) var(--btn-ph);
+    border-radius: var(--btn-r);
+    line-height: 1;
+    border: none;
+  }
+  .btn-wa svg { width: 15px; height: 15px; fill: #fff; flex-shrink: 0; }
+
+  /* ─────────────────────────────
+     SECTION SHARED
+  ───────────────────────────── */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.55rem;
+    display: block;
+  }
+  h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  h2 em { font-style: italic; }
+  h3 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  p {
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.78;
+    margin-bottom: 1rem;
+    max-width: 60ch;
+  }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: var(--ink); font-weight: 500; }
+  hr { border: none; border-top: 1px solid var(--border); }
+
+  /* ─────────────────────────────
+     ACTIVITIES
+  ───────────────────────────── */
+  .activities { background: var(--ink); }
+  .activities .eyebrow { color: rgba(255,255,255,0.35); }
+  .activities h2 { color: #fff; }
+  .activities .section-lead {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.45);
+    max-width: 52ch;
+    margin-top: 0.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .act-mosaic {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 240px 240px;
+    gap: 8px;
+  }
+  .act-cell {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: default;
+  }
+  .act-cell.span-tall { grid-row: 1 / 3; }
+  .act-cell img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .act-cell:hover img { transform: scale(1.04); }
+  .act-cell-grad {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,37,32,0.82) 0%, rgba(26,37,32,0.1) 55%, transparent 75%);
+  }
+  .act-cell-name {
+    position: absolute; bottom: 1rem; left: 1.1rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .act-cell.span-tall .act-cell-name { font-size: 1.4rem; }
+
+  @media (max-width: 640px) {
+    .hero { height: 60vh; min-height: 400px; }
+    .hero-img { object-position: 65% top; }
+  }
+  @media (max-width: 640px) {
+    .act-mosaic {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px repeat(2, 150px);
+    }
+    .act-cell.span-tall { grid-row: auto; grid-column: 1 / -1; }
+  }
+
+  /* ─────────────────────────────
+     ACCOMMODATION
+  ───────────────────────────── */
+  .accommodation { background: var(--bg); }
+
+  .acc-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 2.5rem;
+  }
+  .acc-main-img { height: 420px; border-radius: 8px; overflow: hidden; }
+  .acc-thumb-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .acc-thumb { aspect-ratio: 1; border-radius: 5px; overflow: hidden; }
+  .acc-text { display: flex; flex-direction: column; gap: 1rem; }
+
+  .acc-includes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 0.3rem;
+  }
+  .acc-includes li {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .acc-includes li::before {
+    content: '✓';
+    color: var(--accent);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+  .acc-note {
+    font-size: 0.84rem;
+    color: var(--muted);
+    font-weight: 300;
+    border-left: 2px solid var(--border);
+    padding-left: 0.85rem;
+    max-width: none !important;
+    opacity: 0.8;
+  }
+
+  /* ─────────────────────────────
+     COMMUNITY / BANGLI
+  ───────────────────────────── */
+  .bottom-section {
+    background: var(--bg);
+    padding: 0 0 5rem;
+  }
+  .bottom-inner { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+
+  .community-mosaic {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-rows: 300px 200px;
+    gap: 6px;
+    margin-bottom: 3rem;
+  }
+  .community-mosaic .cm-cell { overflow: hidden; position: relative; }
+  .community-mosaic .cm-cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .community-mosaic .cm-cell.tall { grid-row: 1 / 3; }
+
+  .community-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .bangli-card {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .bangli-thumb {
+    width: 56px; height: 56px;
+    border-radius: 50%; overflow: hidden; flex-shrink: 0;
+  }
+  .bangli-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+  .bangli-card-name {
+    font-family: var(--font-heading);
+    font-weight: 600; font-size: 1rem; color: var(--ink);
+  }
+  .bangli-card-role {
+    font-family: var(--font-body);
+    font-size: 0.72rem; font-weight: 300; color: var(--muted); margin-top: 0.1rem;
+  }
+
+  @media (max-width: 640px) {
+    .community-mosaic {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px 140px 140px;
+    }
+    .community-mosaic .cm-cell.tall { grid-row: auto; grid-column: 1 / 3; }
+    .community-body { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+
+  /* ─────────────────────────────
+     GALLERY
+  ───────────────────────────── */
+  .gallery-section { background: var(--surface); padding: 5rem 2rem; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 240px 180px 220px;
+    gap: 6px;
+    margin-top: 1.5rem;
+  }
+  .gallery-grid .gc { border-radius: 6px; overflow: hidden; position: relative; }
+  .gallery-grid .gc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .gallery-grid .gc:hover img { transform: scale(1.04); }
+  .gallery-grid .gc.wide { grid-column: span 2; }
+  .gallery-grid .gc.tall { grid-row: span 2; }
+  /* local products section */
+  .local-products { background: var(--bg); }
+  .lp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 360px;
+    position: relative;
+    gap: 4px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .lp-img { position: relative; overflow: hidden; }
+  .lp-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .lp-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(10,20,15,0.82) 0%, rgba(10,20,15,0.3) 50%, transparent 100%);
+    padding: 2.5rem 2rem 2rem;
+    color: #fff;
+    pointer-events: none;
+  }
+  .lp-overlay .eyebrow { color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; font-weight: 600; }
+  .lp-overlay p { font-size: 1rem; font-weight: 300; line-height: 1.6; max-width: 480px; color: #fff; }
+
+  @media (max-width: 640px) {
+    .acc-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .acc-main-img { height: 280px; }
+  }
+  @media (max-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px;
+      grid-auto-rows: 150px;
+    }
+    .gallery-grid .gc.wide { grid-column: span 2; }
+    .gallery-grid .gc.tall { grid-column: 2; grid-row: 2 / 4; }
+    .gallery-grid .gc.tall img { transform: scale(1.2); }
+    .gc-hide-mobile { display: none; }
+    .gc-mobile-wide { grid-column: span 2; }
+    .lp-grid { grid-template-columns: 1fr; grid-template-rows: 260px 260px; }
+    .lp-overlay { background: linear-gradient(to top, rgba(10,20,15,0.88) 0%, rgba(10,20,15,0.4) 60%, transparent 100%); }
+  }
+
+  /* ─────────────────────────────
+     PRACTICAL
+  ───────────────────────────── */
+  .practical { background: var(--bg); padding: 4rem 2rem; }
+
+  .practical-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 4rem;
+    margin-top: 2rem;
+    max-width: 700px;
+  }
+  .p-item dt {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .p-item dd {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─────────────────────────────
+     CTA
+  ───────────────────────────── */
+  .cta-section {
+    background: var(--ink);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+  .cta-section h2 {
+    color: #fff;
+    max-width: 24ch;
+    margin: 0 auto 0.8rem;
+  }
+  .cta-section p {
+    color: rgba(255,255,255,0.5);
+    max-width: 44ch;
+    margin: 0 auto 2rem;
+  }
+  .cta-note {
+    display: block;
+    margin-top: 0.85rem;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.28);
+    letter-spacing: 0.04em;
+  }
+
+  /* ─────────────────────────────
+     FOOTER
+  ───────────────────────────── */
+  footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    font-weight: 300;
+    color: var(--muted);
+    background: var(--bg);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section class="hero">
+  <img class="hero-img"
+    src="pictures/Scenic nature/buffalosandpalmtrees.jpeg"
+    alt="Water buffaloes grazing beneath palm trees on Pulau Tuba">
+  <div class="hero-gradient"></div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">Pulau Tuba · Kedah · Malaysia</span>
+    <h1>Welcome to<br>Pulau Tuba.</h1>
+    <p>Island paradise with lots to explore, just a 15 minute ferry ride from Langkawi.</p>
+    <a href="https://wa.me/60XXXXXXXXX" class="btn-wa">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Message Bangli on WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     ACTIVITIES
+══════════════════════════════ -->
+<section class="activities">
+  <div class="section-inner">
+    <p class="eyebrow">What to do</p>
+    <h2>Activities on <em>the island</em></h2>
+
+    <div class="act-mosaic">
+      <div class="act-cell span-tall">
+        <img src="pictures/Activities/cave-exploration.jpeg" alt="Cave exploration guided by Bangli">
+        <div class="act-cell-grad"></div>
+        <span class="act-cell-name">Cave<br>Exploration</span>
+      </div>
+      <div class="act-cell">
+        <img src="pictures/Activities/jungletour.jpeg" alt="Jungle trail and geotrail">
+        <div class="act-cell-grad"></div>
+        <span class="act-cell-name">Jungle Trail</span>
+      </div>
+      <div class="act-cell">
+        <img src="pictures/Scenic nature/ricefields1.jpeg" alt="Rice fields on Pulau Tuba">
+        <div class="act-cell-grad"></div>
+        <span class="act-cell-name">Rice Fields</span>
+      </div>
+      <div class="act-cell">
+        <img src="pictures/Scenic nature/pier1.jpeg" alt="Fishing boats at the village pier">
+        <div class="act-cell-grad"></div>
+        <span class="act-cell-name">Fishing Trip</span>
+      </div>
+      <div class="act-cell">
+        <img src="pictures/Scenic nature/coast2.jpeg" alt="Island coastline">
+        <div class="act-cell-grad"></div>
+        <span class="act-cell-name">Island Hopping</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ══════════════════════════════
+     ACCOMMODATION
+══════════════════════════════ -->
+<section class="accommodation">
+  <div class="section-inner">
+    <p class="eyebrow">Where you'll stay</p>
+    <h2>A family home</h2>
+    <div class="acc-layout">
+      <div>
+        <div class="acc-main-img">
+          <img src="pictures/Accomodation/welcome1.jpeg"
+            alt="Host family welcoming guests at their kampung home">
+        </div>
+        <div class="acc-thumb-row">
+          <div class="acc-thumb">
+            <img src="pictures/Accomodation/program-homestay-plaque.jpeg" alt="Official Malaysia Homestay Programme plaque">
+          </div>
+          <div class="acc-thumb">
+            <img src="pictures/Accomodation/bedroom2.jpeg" alt="Guest bedroom" style="object-position: bottom;">
+          </div>
+          <div class="acc-thumb">
+            <img src="pictures/Accomodation/backyard1.jpeg" alt="Backyard of the homestay">
+          </div>
+        </div>
+      </div>
+      <div class="acc-text">
+        <p>Bangli matches you with one of the host families in the kampung — a private room in a real family home. You'll eat with them, share the common spaces, and experience the village from the inside.</p>
+        <p style="font-weight: 500;">The families here are part of Malaysia's official Homestay Programme — registered, trusted, and genuinely welcoming.</p>
+        <ul class="acc-includes">
+          <li>Private room</li>
+          <li>Home-cooked meals included</li>
+          <li>Activities arranged through Bangli</li>
+          <li>Families matched to your group size</li>
+          <li>English-speaking coordination</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ══════════════════════════════
+     COMMUNITY / BANGLI
+══════════════════════════════ -->
+<section class="bottom-section">
+
+  <div class="community-mosaic">
+    <div class="cm-cell tall">
+      <img src="pictures/Community/community-firm-handshakes.jpeg" alt="Community welcome handshakes">
+    </div>
+    <div class="cm-cell">
+      <img src="pictures/Community/meal.jpeg" alt="Communal meal with host family">
+    </div>
+    <div class="cm-cell">
+      <img src="pictures/Community/drummer.jpeg" alt="Traditional drumming">
+    </div>
+    <div class="cm-cell">
+      <img src="pictures/Community/football.jpeg" alt="Football on the island">
+    </div>
+    <div class="cm-cell">
+      <img src="pictures/Community/ilovepulautuba.jpeg" alt="I love Pulau Tuba">
+    </div>
+  </div>
+
+  <div class="bottom-inner">
+    <div class="community-body">
+      <div>
+        <p class="eyebrow">The community</p>
+        <h2>Life on <em>Pulau Tuba</em></h2>
+        <p>The island has its own rhythm — fishing at dawn, meals shared at long tables, music in the evenings. You're not visiting a tourist attraction. You're staying with the people who live here.</p>
+        <div class="bangli-card">
+          <div class="bangli-thumb">
+            <img src="pictures/Bangli/bangli1.jpeg" alt="Bangli">
+          </div>
+          <div>
+            <p class="bangli-card-name">Bangli</p>
+            <p class="bangli-card-role">Coordinator, guide &amp; lifelong resident of Tuba</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p>Bangli manages the whole operation — host family matching, tours, transport, and whatever else comes up. He speaks English, knows every corner of the island, and has been welcoming visitors for years.</p>
+        <p><strong>Just tell him your dates and how many people. He'll take care of the rest.</strong></p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════
+     GALLERY
+══════════════════════════════ -->
+<section class="gallery-section">
+  <div class="section-inner">
+    <p class="eyebrow">The island</p>
+    <h2>More from <em>Pulau Tuba</em></h2>
+    <div class="gallery-grid">
+      <div class="gc wide">
+        <img src="pictures/Scenic nature/ricefields3.jpeg" alt="Rice fields on Pulau Tuba">
+      </div>
+      <div class="gc tall">
+        <img src="pictures/Activities/liane.jpeg" alt="Jungle liane swing">
+      </div>
+      <div class="gc">
+        <img src="pictures/Activities/jungletour.jpeg" alt="Jungle trail">
+      </div>
+      <div class="gc">
+        <img src="pictures/Activities/cave-dark.jpeg" alt="Cave exploration on Pulau Tuba">
+      </div>
+      <div class="gc gc-mobile-wide">
+        <img src="pictures/Scenic nature/coast4.jpeg" alt="Pulau Tuba coastline">
+      </div>
+      <div class="gc">
+        <img src="pictures/Scenic nature/pier3.jpeg" alt="Village pier at dusk">
+      </div>
+      <div class="gc">
+        <img src="pictures/Scenic nature/ricefields2.jpeg" alt="Rice fields">
+      </div>
+      <div class="gc wide gc-hide-mobile">
+        <img src="pictures/Community/ilovepulautuba.jpeg" alt="I love Pulau Tuba">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     LOCAL PRODUCTS
+══════════════════════════════ -->
+<section class="local-products">
+  <div class="section-inner" style="padding: 5rem 2rem;">
+    <div class="lp-grid">
+      <div class="lp-img">
+        <img src="pictures/Community/local-coconutoil.jpeg" alt="Local coconut oil">
+      </div>
+      <div class="lp-img">
+        <img src="pictures/Bangli/local-honey.jpeg" alt="Local honey harvested by Bangli">
+      </div>
+      <div class="lp-overlay">
+        <p class="eyebrow">Local products</p>
+        <p>On the island you can find exciting local products — coconut oil, and wild honey harvested by Bangli himself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     PRACTICAL
+══════════════════════════════ -->
+<section class="practical">
+  <div class="section-inner">
+    <p class="eyebrow">Before you come</p>
+    <h2>Getting here &amp; what to know</h2>
+    <dl class="practical-grid">
+      <div class="p-item">
+        <dt>Getting here</dt>
+        <dd>Ferry from Kuah Jetty, Langkawi · around 15 minutes · runs daily</dd>
+      </div>
+      <div class="p-item">
+        <dt>Best season</dt>
+        <dd>High season October–May · June to September brings rain and rougher seas</dd>
+      </div>
+      <div class="p-item">
+        <dt>What to bring</dt>
+        <dd>Light clothes, sun protection, cash — there is an ATM on the island</dd>
+      </div>
+      <div class="p-item">
+        <dt>Pricing</dt>
+        <dd>Built around your group and dates · ask Bangli for a package</dd>
+      </div>
+      <div class="p-item">
+        <dt>Languages</dt>
+        <dd>Bahasa Melayu on the island · Bangli speaks English</dd>
+      </div>
+      <div class="p-item">
+        <dt>Who is this for</dt>
+        <dd>Families, friend groups, solo travellers — anyone who wants the real thing</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     CTA
+══════════════════════════════ -->
+<section class="cta-section">
+  <h2>Message Bangli and he'll sort everything out.</h2>
+  <a href="https://wa.me/60XXXXXXXXX" class="btn-wa" style="font-size:1rem; padding:0.85rem 2rem;">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Message Bangli on WhatsApp
+  </a>
+</section>
+
+<footer>
+  <span>Pulau Tuba Homestay Group · Kedah, Malaysia</span>
+  <span>Community-run</span>
+</footer>
+
+</body>
+</html>
